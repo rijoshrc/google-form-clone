@@ -6,6 +6,7 @@ import {
   removeFieldConfig,
   setFieldLabel,
   setFieldOption,
+  setOptionLabel,
 } from "@/lib/slices/formSlice";
 import { Switch } from "@nextui-org/react";
 import React, { useMemo } from "react";
@@ -63,15 +64,31 @@ const FormField: React.FC<FormFieldProps> = ({ field }) => {
     );
   };
 
+  /**
+   * Update the option label in store
+   * @param fieldId
+   * @returns
+   */
+  const handleOptionLabelChange = (optionId: string | number) => {
+    return (e: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch(
+        setOptionLabel({
+          id: field.id,
+          option: { label: e.target.value, value: optionId },
+        })
+      );
+    };
+  };
+
   const optionSection = (
     <div className="p-4 space-y-2">
       {field.options?.map((option) => (
-        <div>
+        <div key={option.value}>
           <Input
             variant="underline"
             placeholder="Option"
-            key={option.value}
             value={option.label}
+            onChange={handleOptionLabelChange(option.value)}
           />
         </div>
       ))}

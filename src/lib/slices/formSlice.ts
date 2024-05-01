@@ -106,6 +106,55 @@ export const formSlice = createSlice({
       state.config.fields = fields;
     },
     /**
+     * Update the option label
+     * Find the field by matching the id
+     * @param state
+     * @param action
+     */
+    setOptionLabel: (
+      state,
+      action: PayloadAction<{ id: string | number; option: Option }>
+    ) => {
+      const { id, option } = action.payload;
+
+      // Find the field index
+      const fieldIndex = state.config.fields.findIndex((f) => f.id === id);
+
+      // Check if the field exists
+      if (fieldIndex !== -1) {
+        // Retrieve the field and its options
+        const field = state.config.fields[fieldIndex];
+        const options = field.options || [];
+
+        // Find the index of the option to update
+        const optionIndex = options.findIndex(
+          (opt) => opt.value === option.value
+        );
+
+        // Check if the option exists
+        if (optionIndex !== -1) {
+          // Create a copy of the options array
+          const updatedOptions = [...options];
+
+          // Update the label of the specific option
+          updatedOptions[optionIndex] = {
+            ...updatedOptions[optionIndex],
+            label: option.label,
+          };
+
+          // Create a copy of the field with updated options
+          const updatedField = { ...field, options: updatedOptions };
+
+          // Create a copy of the fields array with the updated field
+          const updatedFields = [...state.config.fields];
+          updatedFields[fieldIndex] = updatedField;
+
+          // Update the state with the new fields array
+          state.config.fields = updatedFields;
+        }
+      }
+    },
+    /**
      * Reset state
      * @returns
      */
@@ -122,6 +171,7 @@ export const {
   setFieldLabel,
   removeFieldConfig,
   setFieldOption,
+  setOptionLabel,
 } = formSlice.actions;
 
 export default formSlice.reducer;
