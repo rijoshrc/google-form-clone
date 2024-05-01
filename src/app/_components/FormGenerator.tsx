@@ -8,8 +8,12 @@ import {
 } from "@/lib/slices/formSlice";
 import { useDispatch, useSelector } from "react-redux";
 import FormField from "./FormField";
+import { Button } from "@/components/atoms/button";
+import { useRouter } from "next/navigation";
 
 const FormGenerator = () => {
+  // get the router
+  const router = useRouter();
   // get the dispatch hook
   const dispatch = useDispatch();
   // get the form config
@@ -41,6 +45,15 @@ const FormGenerator = () => {
         {fields.map((field) => (
           <FormField field={field} key={field.id} />
         ))}
+      </div>
+      <div className="mt-4 flex justify-end">
+        <Button
+          variant="primary"
+          className="text-white"
+          onClick={() => router.push("/form/preview")}
+        >
+          View form
+        </Button>
       </div>
     </section>
   );
