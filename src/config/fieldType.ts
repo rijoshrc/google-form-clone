@@ -10,14 +10,17 @@ const fieldTypes = [
   {
     label: "Single select",
     value: "radio",
+    options: true,
   },
   {
     label: "Multi select",
     value: "checkbox",
+    options: true,
   },
   {
     label: "Dropdown",
     value: "select",
+    options: true,
   },
   {
     label: "Date",

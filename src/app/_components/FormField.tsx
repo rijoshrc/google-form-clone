@@ -1,22 +1,96 @@
 import { Card } from "@/components/atoms/card";
 import { Input } from "@/components/atoms/input";
 import { Separator } from "@/components/atoms/seperator";
-import { FieldConfig } from "@/lib/slices/formSlice";
+import {
+  FieldConfig,
+  removeFieldConfig,
+  setFieldLabel,
+  setFieldOption,
+} from "@/lib/slices/formSlice";
 import { Switch } from "@nextui-org/react";
-import React from "react";
+import React, { useMemo } from "react";
 import { MdOutlineDelete } from "react-icons/md";
 import { FaRegClone } from "react-icons/fa";
+import fieldTypes from "@/config/fieldType";
+import { useDispatch } from "react-redux";
+import { Button } from "@/components/atoms/button";
+import { uniqueValue } from "@/utils/fns";
 
 type FormFieldProps = {
   field: FieldConfig;
 };
 
 const FormField: React.FC<FormFieldProps> = ({ field }) => {
+  // get the dispatch hook
+  const dispatch = useDispatch();
+  // check if the field type has options
+  const hasOptions = useMemo(
+    () =>
+      !!fieldTypes.find((fieldType) => fieldType.value === field.type)?.options,
+    [field]
+  );
+
+  /**
+   * Handle the chnage in field label
+   * Update the label value to corresponding field config in store
+   * @param e
+   */
+  const handleFieldLabelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setFieldLabel({ label: e.target.value, value: field.id }));
+  };
+
+  /**
+   * Remove the current field config from state
+   * @param e
+   */
+  const deleteField = (e: React.MouseEvent<HTMLSpanElement>) => {
+    dispatch(removeFieldConfig(field.id));
+  };
+
+  /**
+   * Add option to the field config
+   * @param e
+   */
+  const addFieldOption = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // generate id from current timestamp
+    const id = uniqueValue();
+    const optionLength = field.options?.length || 0;
+    dispatch(
+      setFieldOption({
+        id: field.id,
+        field: { label: "Option " + (optionLength + 1), value: id },
+      })
+    );
+  };
+
+  const optionSection = (
+    <div className="p-4 space-y-2">
+      {field.options?.map((option) => (
+        <div>
+          <Input
+            variant="underline"
+            placeholder="Option"
+            key={option.value}
+            value={option.label}
+          />
+        </div>
+      ))}
+      <Button variant="link" onClick={addFieldOption}>
+        Add option
+      </Button>
+    </div>
+  );
+
   return (
     <Card className="">
       <div className="p-4 ">
-        <Input variant="underline" value={field.label} />
+        <Input
+          variant="underline"
+          value={field.label}
+          onChange={handleFieldLabelChange}
+        />
       </div>
+      {hasOptions && optionSection}
       <div className="flex pt-3 pb-1 px-4 gap-2 justify-end items-center">
         <span>
           <Switch
@@ -31,7 +105,7 @@ const FormField: React.FC<FormFieldProps> = ({ field }) => {
         <span className="cursor-pointer hover:scale-105">
           <FaRegClone size={18} className="text-secondary hover:text-primary" />
         </span>
-        <span className="cursor-pointer hover:scale-105">
+        <span className="cursor-pointer hover:scale-105" onClick={deleteField}>
           <MdOutlineDelete
             className="text-secondary hover:text-primary"
             size={24}

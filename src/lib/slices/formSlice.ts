@@ -1,3 +1,4 @@
+import { updateFieldById } from "@/utils/fns";
 import { RootState } from "../store";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
@@ -68,6 +69,43 @@ export const formSlice = createSlice({
       state.config.description = action.payload;
     },
     /**
+     * Update the field label
+     * @param state
+     * @param action
+     */
+    setFieldLabel: (state, action: PayloadAction<Option>) => {
+      const field = action.payload;
+      let fields = [...state.config.fields];
+      const fieldIndex = fields.findIndex((f) => f.id === field.value);
+      fields[fieldIndex].label = field.label;
+      state.config.fields = fields;
+    },
+    /**
+     * Remove the field config by id
+     * @param state
+     * @param action
+     */
+    removeFieldConfig: (state, action: PayloadAction<string | number>) => {
+      state.config.fields = [...state.config.fields].filter(
+        (field) => field.id !== action.payload
+      );
+    },
+    /**
+     * Add the field options
+     * @param state
+     * @param action
+     */
+    setFieldOption: (
+      state,
+      action: PayloadAction<{ id: string | number; field: Option }>
+    ) => {
+      let fields = [...state.config.fields];
+      const fieldIndex = fields.findIndex((f) => f.id === action.payload.id);
+      const options = fields[fieldIndex].options || [];
+      fields[fieldIndex].options = [...options, action.payload.field];
+      state.config.fields = fields;
+    },
+    /**
      * Reset state
      * @returns
      */
@@ -76,7 +114,15 @@ export const formSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setFields, reset, setTitle, setDescription } = formSlice.actions;
+export const {
+  setFields,
+  reset,
+  setTitle,
+  setDescription,
+  setFieldLabel,
+  removeFieldConfig,
+  setFieldOption,
+} = formSlice.actions;
 
 export default formSlice.reducer;
 

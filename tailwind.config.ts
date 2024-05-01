@@ -21,8 +21,8 @@ const config: Config = {
         secondary: "#707172",
         "secondary-dark": "#707172",
         // button
-        "primary-btn": "#fff",
-        "primary-btn-dark": "#fff",
+        "primary-btn": "#27283E",
+        "primary-btn-dark": "#27283E",
         "destructive-btn": "#fff",
         "destructive-btn-dark": "#fff",
         "secondary-btn": "#000",
@@ -31,8 +31,8 @@ const config: Config = {
         "outline-btn-dark": "#fff",
         "ghost-btn": "#000",
         "ghost-btn-dark": "#fff",
-        "link-btn": "#000",
-        "link-btn-dark": "#fff",
+        "link-btn": "#27283E",
+        "link-btn-dark": "#27283E",
         // end of button
         accent: "#80D17A",
         "input-dark": "#fff",
