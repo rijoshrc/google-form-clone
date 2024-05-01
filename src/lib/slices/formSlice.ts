@@ -179,6 +179,44 @@ export const formSlice = createSlice({
         state.config.fields = updatedFields;
       }
     },
+    removeOptionFromField: (
+      state,
+      action: PayloadAction<{
+        fieldId: string | number;
+        optionValue: string | number;
+      }>
+    ) => {
+      const { fieldId, optionValue } = action.payload;
+
+      // Find the field index
+      const fieldIndex = state.config.fields.findIndex((f) => f.id === fieldId);
+
+      // Check if the field exists and has options
+      if (
+        ((fieldIndex !== -1 &&
+          state.config.fields[fieldIndex].options &&
+          state.config.fields[fieldIndex].options?.length) ||
+          -1) > 1
+      ) {
+        // Filter out the option with the specified value
+        const updatedOptions = state.config.fields[fieldIndex].options?.filter(
+          (option) => option.value !== optionValue
+        );
+
+        // Create a copy of the field with updated options
+        const updatedField = {
+          ...state.config.fields[fieldIndex],
+          options: updatedOptions,
+        };
+
+        // Create a copy of the fields array with the updated field
+        const updatedFields = [...state.config.fields];
+        updatedFields[fieldIndex] = updatedField;
+
+        // Update the state with the new fields array
+        state.config.fields = updatedFields;
+      }
+    },
 
     /**
      * Reset state
@@ -199,6 +237,7 @@ export const {
   setFieldOption,
   setOptionLabel,
   setFieldRequired,
+  removeOptionFromField,
 } = formSlice.actions;
 
 export default formSlice.reducer;

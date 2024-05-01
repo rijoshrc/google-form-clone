@@ -4,6 +4,7 @@ import { Separator } from "@/components/atoms/seperator";
 import {
   FieldConfig,
   removeFieldConfig,
+  removeOptionFromField,
   setFieldLabel,
   setFieldOption,
   setFieldRequired,
@@ -17,6 +18,7 @@ import fieldTypes from "@/config/fieldType";
 import { useDispatch } from "react-redux";
 import { Button } from "@/components/atoms/button";
 import { uniqueValue } from "@/utils/fns";
+import { IoMdClose } from "react-icons/io";
 
 type FormFieldProps = {
   field: FieldConfig;
@@ -89,16 +91,40 @@ const FormField: React.FC<FormFieldProps> = ({ field }) => {
     dispatch(setFieldRequired({ id: field.id, required: e.target.checked }));
   };
 
+  /**
+   * Remove option from the list and update store
+   * @param optionValue
+   * @returns
+   */
+  const removeOption = (optionValue: string | number) => {
+    return (e: React.MouseEvent<HTMLSpanElement>) => {
+      dispatch(
+        removeOptionFromField({
+          fieldId: field.id,
+          optionValue,
+        })
+      );
+    };
+  };
+
   const optionSection = (
     <div className="p-4 space-y-2">
       {field.options?.map((option) => (
-        <div key={option.value}>
+        <div key={option.value} className="flex items-center group">
           <Input
             variant="underline"
             placeholder="Option"
             value={option.label}
             onChange={handleOptionLabelChange(option.value)}
           />
+          {(field.options?.length || 0) > 1 && (
+            <span
+              className="hidden group-hover:block cursor-pointer"
+              onClick={removeOption(option.value)}
+            >
+              <IoMdClose className="text-secondary hover:text-primary" />
+            </span>
+          )}
         </div>
       ))}
       <Button variant="link" onClick={addFieldOption}>
