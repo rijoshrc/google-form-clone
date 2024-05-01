@@ -1,20 +1,15 @@
-import { getFields, setFields } from "@/lib/slices/formSlice";
-import { useId } from "react";
+import {
+  FieldConfig,
+  Option,
+  getFields,
+  setFields,
+} from "@/lib/slices/formSlice";
 import { CiSquarePlus } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 
-type Field = {
-  label: string;
-  value: string;
-};
-
 type ElementListItemProps = {
-  field: Field;
+  field: Option;
 };
-
-interface DropResult {
-  name: string;
-}
 
 const ElementListItem: React.FC<ElementListItemProps> = ({ field }) => {
   // get the dispatch hook
@@ -31,10 +26,11 @@ const ElementListItem: React.FC<ElementListItemProps> = ({ field }) => {
     // generate id from current timestamp
     const id = Date.now();
     // generate config
-    const fieldConfig = {
+    const fieldConfig: FieldConfig = {
       id,
-      type: field.value,
+      type: field.value + "",
       label: field.label,
+      title: field.label,
     };
     dispatch(setFields([...fields, fieldConfig]));
   };

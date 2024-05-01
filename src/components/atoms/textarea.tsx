@@ -14,7 +14,7 @@ const Textarea: React.FC<TextareaProps> = ({
   return (
     <textarea
       className={cn(
-        "px-2 py-1 outline-none focus:border-accent text-sm min-h-[50px] w-full text-primary font-normal dark:bg-input-dark dark:text-input-dark border border-input rounded-sm",
+        "px-2 py-1 outline-none focus:border-accent text-sm min-h-[50px] w-full text-primary font-normal border-b border-b-input rounded-sm",
         className
       )}
       ref={forwardRef}

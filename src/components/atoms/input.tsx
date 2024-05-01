@@ -22,7 +22,7 @@ const Input: React.FC<InputProps> = ({
 );
 
 const inputVariants = cva(
-  "px-2 py-1 outline-none focus:border-accent text-sm min-h-[40px] w-full text-primary font-normal dark:bg-input-dark dark:text-input-dark",
+  "px-2 py-1 outline-none focus:border-accent text-sm min-h-[40px] w-full text-primary font-normal ",
   {
     variants: {
       variant: {
