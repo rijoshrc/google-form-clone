@@ -6,6 +6,7 @@ import {
   removeFieldConfig,
   setFieldLabel,
   setFieldOption,
+  setFieldRequired,
   setOptionLabel,
 } from "@/lib/slices/formSlice";
 import { Switch } from "@nextui-org/react";
@@ -80,6 +81,14 @@ const FormField: React.FC<FormFieldProps> = ({ field }) => {
     };
   };
 
+  /**
+   * Update the required property in store on changing the field
+   * @param e
+   */
+  const handleRequiredChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setFieldRequired({ id: field.id, required: e.target.checked }));
+  };
+
   const optionSection = (
     <div className="p-4 space-y-2">
       {field.options?.map((option) => (
@@ -114,6 +123,7 @@ const FormField: React.FC<FormFieldProps> = ({ field }) => {
             size="sm"
             color="success"
             classNames={{ label: "text-secondary hover:text-primary" }}
+            onChange={handleRequiredChange}
           >
             Required
           </Switch>

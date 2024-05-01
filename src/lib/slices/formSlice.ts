@@ -154,6 +154,32 @@ export const formSlice = createSlice({
         }
       }
     },
+    setFieldRequired: (
+      state,
+      action: PayloadAction<{ id: string | number; required: boolean }>
+    ) => {
+      const { id, required } = action.payload;
+
+      // Find the index of the field to update
+      const fieldIndex = state.config.fields.findIndex((f) => f.id === id);
+
+      // Check if the field exists
+      if (fieldIndex !== -1) {
+        // Create a copy of the field and update the required property
+        const updatedField = {
+          ...state.config.fields[fieldIndex],
+          required,
+        };
+
+        // Create a copy of the fields array with the updated field
+        const updatedFields = [...state.config.fields];
+        updatedFields[fieldIndex] = updatedField;
+
+        // Update the state with the new fields array
+        state.config.fields = updatedFields;
+      }
+    },
+
     /**
      * Reset state
      * @returns
@@ -172,6 +198,7 @@ export const {
   removeFieldConfig,
   setFieldOption,
   setOptionLabel,
+  setFieldRequired,
 } = formSlice.actions;
 
 export default formSlice.reducer;
