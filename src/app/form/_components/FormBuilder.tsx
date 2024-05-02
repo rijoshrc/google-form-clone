@@ -5,20 +5,38 @@ import { Select } from "@/components/atoms/select";
 import { Textarea } from "@/components/atoms/textarea";
 import { FieldConfig, FormConfig } from "@/lib/slices/formSlice";
 import { Checkbox, Radio, RadioGroup } from "@nextui-org/react";
+import { LegacyRef, forwardRef } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 type FormBuilderProps = {
   formConfig: FormConfig;
 };
 
 const FormBuilder: React.FC<FormBuilderProps> = ({ formConfig }) => {
-  console.log(formConfig);
+  /**
+   * Custom input field for the date picker
+   */
+  const DateCustomInput = forwardRef(
+    (
+      { value, onClick }: { value: string; onClick: () => void },
+      ref: LegacyRef<HTMLInputElement> | undefined
+    ) => (
+      <Input
+        variant="underline"
+        onClick={onClick}
+        value={value}
+        className="w-full "
+      />
+    )
+  );
+
   /**
    * Render fields by checking the types
    * @param field
    * @returns
    */
   const renderFormField = (field: FieldConfig) => {
-    console.log(field.type);
     switch (field.type) {
       case "input":
         return (
@@ -76,6 +94,22 @@ const FormBuilder: React.FC<FormBuilderProps> = ({ formConfig }) => {
                 </Checkbox>
               ))}
             </div>
+          </div>
+        );
+      case "date":
+        return (
+          <div key={field.id} className="space-y-1">
+            <Label>{field.label}</Label>
+
+            <DatePicker
+              onChange={(date) => console.log(date)}
+              customInput={
+                <DateCustomInput
+                  value="asd"
+                  onClick={() => console.log("Asd")}
+                />
+              }
+            />
           </div>
         );
       default:
