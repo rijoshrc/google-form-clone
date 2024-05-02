@@ -27,6 +27,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({ formConfig }) => {
         onClick={onClick}
         value={value}
         className="w-full "
+        onChange={() => console.log("")}
       />
     )
   );
@@ -47,7 +48,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({ formConfig }) => {
         );
       case "textarea":
         return (
-          <div key={field.id} className="space-y-1">
+          <div key={field.id}>
             <Label>{field.label}</Label>
             <Textarea required={field.required} />
           </div>
@@ -65,6 +66,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({ formConfig }) => {
             <RadioGroup
               label={field.label}
               classNames={{ label: "text-primary" }}
+              onChange={() => console.log("")}
             >
               {field.options?.map((option) => (
                 <Radio
@@ -98,7 +100,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({ formConfig }) => {
         );
       case "date":
         return (
-          <div key={field.id} className="space-y-1">
+          <div key={field.id}>
             <Label>{field.label}</Label>
 
             <DatePicker
@@ -121,7 +123,7 @@ const FormBuilder: React.FC<FormBuilderProps> = ({ formConfig }) => {
   return (
     <section className="shadow-sm min-h-screen h-full bg-primary rounded-sm p-10">
       <h2>{formConfig.title}</h2>
-      <form className="space-y-3">
+      <form className="space-y-4">
         {formConfig.fields.map((field) => renderFormField(field))}
         <div className="flex justify-end pt-4">
           <Button type="submit" className="text-white">
