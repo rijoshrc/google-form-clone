@@ -50,7 +50,7 @@ const ElementListItem: React.FC<ElementListItemProps> = ({ field }) => {
   };
 
   return (
-    <li className="pl-4 pr-20 py-2 border-b-primary/50 border-b relative group hover:bg-secondary">
+    <li className="pl-4 pr-20 py-2 border-b-primary/20 border-b relative group hover:bg-secondary">
       <div className="">
         <p className="text-primary font-semibold">{field.label}</p>
         <span
