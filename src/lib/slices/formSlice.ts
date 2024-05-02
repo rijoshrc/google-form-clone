@@ -2,27 +2,7 @@ import { updateFieldById } from "@/utils/fns";
 import { RootState } from "../store";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
-export type Option = {
-  label: string;
-  value: string | number;
-};
-
-export type FieldConfig = {
-  id: string | number;
-  label: string;
-  type: string;
-  title: string;
-  description?: string;
-  required?: boolean;
-  options?: Option[];
-};
-
-export type FormConfig = {
-  title: string;
-  description: string;
-  fields: FieldConfig[];
-};
+import { FieldConfig, FormConfig, Option } from "@/type/form";
 
 export interface FormState {
   loading: boolean;

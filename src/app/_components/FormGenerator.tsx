@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import FormField from "./FormField";
 import { Button } from "@/components/atoms/button";
 import { useRouter } from "next/navigation";
+import useFormGenerator from "@/lib/hooks/form/useFormGenerator";
 
 const FormGenerator = () => {
   // get the router
@@ -18,6 +19,8 @@ const FormGenerator = () => {
   const dispatch = useDispatch();
   // get the form config
   const formConfig = useSelector(getFormConfig);
+  // get the custom hook
+  const { saveFormConfig } = useFormGenerator();
 
   // get the fields
   const fields = formConfig.fields;
@@ -46,7 +49,14 @@ const FormGenerator = () => {
           <FormField field={field} key={field.id} />
         ))}
       </div>
-      <div className="mt-4 flex justify-end">
+      <div className="mt-10 flex justify-end gap-2">
+        <Button
+          variant="primary"
+          className="text-white"
+          onClick={() => saveFormConfig(formConfig)}
+        >
+          Save and Share
+        </Button>
         <Button
           variant="primary"
           className="text-white"
