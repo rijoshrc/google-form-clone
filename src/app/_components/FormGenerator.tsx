@@ -62,7 +62,7 @@ const FormGenerator = () => {
           className="text-white"
           onClick={() => router.push("/form/preview")}
         >
-          View form
+          Preview
         </Button>
       </div>
     </section>
