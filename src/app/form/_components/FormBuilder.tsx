@@ -3,7 +3,7 @@ import { Input } from "@/components/atoms/input";
 import { Label } from "@/components/atoms/label";
 import { Select } from "@/components/atoms/select";
 import { Textarea } from "@/components/atoms/textarea";
-import { FieldConfig, FormConfig } from "@/lib/slices/formSlice";
+import { FieldConfig, FormConfig } from "@/type/form";
 import { Checkbox, Radio, RadioGroup } from "@nextui-org/react";
 import { LegacyRef, forwardRef } from "react";
 import DatePicker from "react-datepicker";

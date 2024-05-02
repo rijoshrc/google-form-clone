@@ -1,10 +1,6 @@
 import fieldTypes from "@/config/fieldType";
-import {
-  FieldConfig,
-  Option,
-  getFields,
-  setFields,
-} from "@/lib/slices/formSlice";
+import { getFields, setFields } from "@/lib/slices/formSlice";
+import { FieldConfig, Option } from "@/type/form";
 import { uniqueValue } from "@/utils/fns";
 import { useMemo } from "react";
 import { CiSquarePlus } from "react-icons/ci";

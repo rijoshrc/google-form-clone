@@ -2,7 +2,6 @@ import { Card } from "@/components/atoms/card";
 import { Input } from "@/components/atoms/input";
 import { Separator } from "@/components/atoms/seperator";
 import {
-  FieldConfig,
   removeFieldConfig,
   removeOptionFromField,
   setFieldLabel,
@@ -19,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { Button } from "@/components/atoms/button";
 import { uniqueValue } from "@/utils/fns";
 import { IoMdClose } from "react-icons/io";
+import { FieldConfig } from "@/type/form";
 
 type FormFieldProps = {
   field: FieldConfig;
